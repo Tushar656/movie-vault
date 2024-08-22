@@ -2,34 +2,16 @@ import React, { useState } from 'react';
 import { View, Text, ImageBackground, Dimensions, FlatList } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Pressable } from 'react-native';
-import {TMDB_API_KEY} from '@env'
 
 const { width, height } = Dimensions.get('window');
 
-const movies = [
-  {
-    id: '1',
-    name: 'Inception',
-    description: 'A skilled thief is given a chance at redemption if he can successfully perform inception, the planting of an idea into a target\'s subconscious.',
-    rating: '8.8',
-    image: 'https://img.asmedia.epimg.net/resizer/v2/ST2R2PANVJBLJHO72OKRYOWQKY.jpg?auth=041625b6706fdb347bb4d1cc6dcc57179602aa30fa4d8eb5cb5415e219868fd4&width=644&height=362&smart=true'
-  },
-  {
-    id: '2',
-    name: 'The Dark Knight',
-    description: 'Batman raises the stakes in his war on crime. With the help of Lt. Jim Gordon and District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal organizations that plague the streets.',
-    rating: '9.0',
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfTYWoYAqNV7uPa3I7QVjmMdNOtJ9T-oEIfg&s'
-  },
-];
-
-export default function MovieSlider() {
+export default function MovieSlider({navigation, movies}) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const renderItem = ({ item }) => (
-    <Pressable>
+    <Pressable onPress={() => navigation.push('MovieDetails', {movieid: item.id})}>
       <ImageBackground
-        source={{ uri: item.image }}
+        source={{ uri: item.primaryImage? item.primaryImage.url : item.primaryImage }}
         style={{ width, height: height / 2 }}
         className="flex justify-end"
       >
@@ -38,18 +20,18 @@ export default function MovieSlider() {
           style={{ height: '100%', width: '100%' }}
           className="p-4 justify-end"
         >
-          <Text className="text-white text-2xl font-bold mb-1">{item.name}</Text>
-          <Text numberOfLines={3} className="text-white text-base mb-1">
-            {item.description}
+          <Text className="text-white text-2xl font-bold mb-1">{item.originalTitleText.text}</Text>
+          <Text numberOfLines={3} className="text-white mb-1 text-sm">
+            {item.description} Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi odit optio vitae veritatis accusantium libero debitis totam deserunt officia minima. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima, rem?
           </Text>
-          <Text className="text-white text-lg font-semibold">{`Rating: ${item.rating}/10`}</Text>
+          <Text className="text-white text-lg font-semibold">{`Rating: 4.6/5`}</Text>
         </LinearGradient>
       </ImageBackground>
     </Pressable>
   );
 
   return (
-    <View className="flex-1 bg-black">
+    <View className="bg-black mb-4" style={{ maxHeight: height / 2 }}>
       <FlatList
         data={movies}
         horizontal

@@ -1,17 +1,24 @@
-import {TMDB_API_KEY} from '@env'
+import {API_KEY} from '@env';
 
 export const baseImagePath = (size, path) => {
     return `https://image.tmdb.org/t/p/${size}/${path}`;
 }
-export const nowPlayingMovies = `https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}`;
-export const upcomingMovies = `https://api.themoviedb.org/3/movie/upcoming?api_key=${TMDB_API_KEY}`;
-export const popularMovies = `https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}`;
+export const upcomingMovies = `https://moviesdatabase.p.rapidapi.com/titles/x/upcoming`;
+export const popularMovies = `https://moviesdatabase.p.rapidapi.com/titles`;
 export const searchMovies = (keyword) => {
-    return `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${keyword}`;
+    return `https://moviesdatabase.p.rapidapi.com/titles/search/title/${keyword}?exact=false&titleType=movie`;
 }
 export const movieDetails = (id) => {
-    return `https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_API_KEY}`;
+    return `https://moviesdatabase.p.rapidapi.com/titles/${id}`;
 }
-export const movieCastDetails = (id) => {
-    return `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${TMDB_API_KEY}`;
+export const movieRating = (id) => {
+    return `https://moviesdatabase.p.rapidapi.com/titles/${id}/ratings`;
 }
+
+export const options = {
+    method: 'GET',
+    headers: {
+      'x-rapidapi-key': API_KEY,
+      'x-rapidapi-host': 'moviesdatabase.p.rapidapi.com'
+    }
+  };
